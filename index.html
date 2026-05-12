@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="NextPath Youth Empowerment Foundation - Raising a generation of empowered, responsible, and innovative young leaders.">
+    <title>NextPath Youth Empowerment Foundation</title>
+
+    <!-- Font Awesome 6 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* ==================== CSS VARIABLES ==================== */
+        :root {
+            --bg: #ffffff;
+            --bg-alt: #f8faff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --primary: #0d9488;
+            --primary-dark: #0f766e;
+            --primary-light: #ccfbf1;
+            --accent: #3b82f6;
+            --accent-light: #dbeafe;
+            --gradient-start: #0d9488;
+            --gradient-end: #3b82f6;
+            --card-bg: #ffffff;
+            --card-shadow: 0 20px 35px rgba(0,0,0,0.05), 0 8px 16px rgba(0,0,0,0.03);
+            --border: #e2e8f0;
+            --input-bg: #f1f5f9;
+            --nav-bg: rgba(255,255,255,0.85);
+            --mobile-bg: #ffffff;
+            --transition: 0.3s ease;
+        }
+        [data-theme="dark"] {
+            --bg: #0f172a;
+            --bg-alt: #1e293b;
+            --text: #f1f5f9;
+            --text-light: #94a3b8;
+            --card-bg: #1e293b;
+            --card-shadow: 0 20px 35px rgba(0,0,0,0.3);
+            --border: #334155;
+            --input-bg: #1e293b;
+            --nav-bg: rgba(15,23,42,0.9);
+            --mobile-bg: #0f172a;
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
+        h1,h2,h3,h4 { font-family: 'Poppins', sans-serif; font-weight: 700; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+        .section { padding: 6rem 0; }
+        .section--alt { background: var(--bg-alt); }
+        .gradient-text {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .btn {
+            display: inline-flex; align-items: center; gap:0.5rem; padding: 0.75rem 1.8rem; border-radius: 999px;
+            font-weight: 600; transition: all var(--transition); cursor: pointer; border: none; font-family: 'Poppins', sans-serif;
+        }
+        .btn--primary { background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; box-shadow: 0 4px 15px rgba(59,130,246,0.35); }
+        .btn--primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(13,148,136,0.4); }
+        .btn--outline { border: 2px solid var(--primary); color: var(--primary); background: transparent; }
+        .btn--outline:hover { background: var(--primary); color: white; }
+        .btn--lg { padding: 0.9rem 2.2rem; font-size: 1.1rem; }
+        .btn--full { width: 100%; justify-content: center; }
+        .section__header { text-align: center; margin-bottom: 3.5rem; }
+        .section__badge {
+            display: inline-block; background: var(--primary-light); color: var(--primary-dark);
+            padding: 0.4rem 1.2rem; border-radius: 999px; font-weight: 600; font-size: 0.85rem;
+            letter-spacing: 0.5px; margin-bottom: 1rem;
+        }
+        .section__title { font-size: clamp(2rem, 5vw, 2.6rem); }
+
+        /* NAVBAR */
+        .header { position: fixed; top:0; left:0; width:100%; z-index: 999; background: var(--nav-bg); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+        .nav { display: flex; align-items: center; justify-content: space-between; height: 75px; }
+        .nav__logo-img { height: 50px; width: auto; display: block; }
+        .nav__list { display: flex; gap: 2rem; align-items: center; }
+        .nav__link { font-weight: 500; position: relative; padding: 0.4rem 0; transition: color var(--transition); }
+        .nav__link::after { content:''; position: absolute; bottom:0; left:0; width:0; height:2px; background: var(--primary); transition: width var(--transition); }
+        .nav__link:hover, .nav__link.active { color: var(--primary); }
+        .nav__link.active::after { width: 100%; }
+        .nav__actions { display: flex; align-items: center; gap: 1rem; }
+        .theme-toggle { background: none; border: none; font-size: 1.3rem; color: var(--text); cursor: pointer; }
+        .theme-toggle:hover { color: var(--accent); }
+        .nav__hamburger { display: none; flex-direction: column; gap:5px; background: none; border: none; cursor: pointer; padding: 5px; }
+        .nav__hamburger-bar { width:25px; height:3px; background: var(--text); border-radius:3px; transition: 0.3s; }
+
+        /* MOBILE MENU */
+        .mobile-menu { position: fixed; inset:0; z-index: 1000; display: none; }
+        .mobile-menu.active { display: block; }
+        .mobile-menu__backdrop { position: absolute; inset:0; background: rgba(0,0,0,0.5); }
+        .mobile-menu__panel { position: absolute; top:0; right:0; width:80%; max-width:320px; height:100%; background: var(--mobile-bg); padding:2rem; animation: slideInRight 0.3s ease; }
+        @keyframes slideInRight { from { transform: translateX(100%); } to { transform: translateX(0); } }
+        .mobile-menu__close {
+            position: absolute; top: 1rem; right: 1rem;
+            background: none; border: none; font-size: 2rem; color: var(--text);
+            cursor: pointer; transition: color 0.2s;
+        }
+        .mobile-menu__close:hover { color: var(--primary); }
+        .mobile-menu__list { margin-top:3rem; display: flex; flex-direction: column; gap:1.8rem; }
+        .mobile-menu__link { font-size:1.2rem; font-weight:600; }
+        .mobile-menu__cta { margin-top:2rem; text-align:center; }
+
+        /* HERO */
+        .hero { position: relative; min-height:100vh; display:flex; align-items:center; background: linear-gradient(135deg, #f0fdfa 0%, #eff6ff 100%); overflow:hidden; }
+        [data-theme="dark"] .hero { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); }
+        .hero__bg-shape { position:absolute; border-radius:50%; opacity:0.15; }
+        .hero__bg-shape--1 { width:500px; height:500px; background:var(--primary); top:-150px; left:-100px; }
+        .hero__bg-shape--2 { width:300px; height:300px; background:var(--accent); bottom:-50px; right:-50px; }
+        .hero__bg-shape--3 { width:200px; height:200px; background:var(--gradient-start); top:40%; right:10%; }
+        .hero__bg-shape--4 { width:150px; height:150px; background:var(--accent); bottom:20%; left:20%; }
+        .hero__dots { position:absolute; top:0; left:0; width:100%; height:100%; background-image: radial-gradient(var(--primary) 1px, transparent 1px); background-size:40px 40px; opacity:0.1; }
+        .hero__container { display:grid; grid-template-columns: 1fr 1fr; gap:3rem; align-items:center; position:relative; z-index:2; }
+        .hero__badge { display:inline-flex; align-items:center; gap:0.5rem; background:var(--accent-light); color:var(--accent); padding:0.4rem 1rem; border-radius:999px; margin-bottom:1.5rem; }
+        .hero__title { font-size: clamp(2.5rem, 7vw, 4rem); line-height:1.2; margin-bottom:1.5rem; }
+        .hero__title-gradient { background: linear-gradient(135deg, var(--primary), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero__title-accent { color: var(--accent); }
+        .hero__subtitle { font-size:1.15rem; color:var(--text-light); margin-bottom:2rem; max-width:500px; }
+        .hero__buttons { display:flex; gap:1rem; flex-wrap:wrap; }
+        .hero__image-wrapper { position:relative; display:flex; align-items:center; justify-content:center; }
+        .hero__image { width:100%; max-width:500px; border-radius:30px; box-shadow:0 25px 50px rgba(0,0,0,0.15); transition: transform 0.5s ease; animation: float-slow 6s ease-in-out infinite; }
+        @keyframes float-slow { 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-12px); } }
+        .hero__image-ring { position:absolute; width:110%; height:110%; border:2px dashed var(--primary-light); border-radius:40px; z-index:-1; animation: spin 25s linear infinite; }
+        @keyframes spin { from { transform:rotate(0deg); } to { transform:rotate(360deg); } }
+
+        /* ABOUT */
+        .about__grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:2rem; }
+        .about__card { background: var(--card-bg); border-radius:24px; padding:2.5rem 2rem; box-shadow: var(--card-shadow); transition: transform var(--transition); }
+        .about__card:hover { transform: translateY(-8px); }
+        .about__card-icon { width:60px; height:60px; background: var(--primary-light); border-radius:18px; display:flex; align-items:center; justify-content:center; font-size:1.8rem; color:var(--primary); margin-bottom:1.5rem; }
+        .about__card h3 { font-size:1.5rem; margin-bottom:1rem; }
+
+        /* PROGRAMS & SLIDERS */
+        .programs__grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:2rem; margin-top:3rem; }
+        .program-card { background: var(--card-bg); border-radius:24px; padding:2rem; box-shadow: var(--card-shadow); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .program-card:hover { transform: scale(1.03) translateY(-5px); box-shadow: 0 30px 40px rgba(0,0,0,0.1); }
+        .program-card__icon { font-size:2.5rem; color:var(--primary); margin-bottom:1.5rem; }
+        .program-card h3 { font-size:1.4rem; margin-bottom:0.8rem; }
+        .program-card p { color:var(--text-light); margin-bottom:1.2rem; }
+        .program-card__link { font-weight:600; color:var(--accent); display:flex; align-items:center; gap:0.4rem; }
+        .image-slider {
+            margin: 2rem 0; border-radius: 24px; overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1); background: var(--card-bg);
+        }
+        .image-slider__track { display: flex; transition: transform 0.5s ease; }
+        .image-slider__img { flex: 0 0 100%; height: 400px; object-fit: cover; }
+        .image-slider__dots { display: flex; justify-content: center; gap: 8px; padding: 1rem 0; }
+        .image-slider__dot { width: 12px; height: 12px; border-radius: 50%; background: #ccc; cursor: pointer; transition: 0.3s; }
+        .image-slider__dot.active { background: var(--primary); transform: scale(1.3); }
+        .slider-title { font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text); text-align: center; }
+
+        /* IMPACT */
+        .impact__grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:2rem; text-align:center; }
+        .impact__number { font-size:3.5rem; font-weight:800; color:var(--primary); display:block; }
+        .impact__label { font-size:1.1rem; color:var(--text-light); }
+
+        /* DONATE */
+        .donate__card {
+            background: var(--card-bg);
+            border-radius: 28px;
+            padding: 3rem 2rem;
+            box-shadow: var(--card-shadow);
+            max-width: 650px;
+            margin: 0 auto;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        .donate__card:hover { transform: translateY(-5px); }
+        .donate__icon {
+            width: 80px; height: 80px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2.5rem; color: white;
+        }
+        .donate__bank-details {
+            background: var(--bg-alt);
+            border-radius: 18px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: left;
+            border: 1px solid var(--border);
+        }
+        .donate__bank-details p {
+            display: flex; justify-content: space-between;
+            padding: 0.8rem 0; border-bottom: 1px solid var(--border);
+        }
+        .donate__bank-details p:last-child { border-bottom: none; }
+        .copy-btn {
+            background: var(--primary-light);
+            color: var(--primary-dark);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.2s;
+            font-size: 0.9rem;
+        }
+        .copy-btn:hover { background: var(--primary); color: white; }
+        .copied-msg { color: var(--primary); font-size: 0.9rem; margin-top: 0.5rem; }
+
+        /* CTA */
+        .cta { background: linear-gradient(135deg, var(--primary), var(--accent)); text-align:center; color:white; }
+        .cta__content { max-width:700px; margin:0 auto; }
+        .cta h2 { font-size:2.5rem; margin-bottom:1rem; }
+        .cta p { margin-bottom:2rem; opacity:0.9; }
+
+        /* CONTACT */
+        .contact__grid { display:grid; grid-template-columns: 1fr 1.5fr; gap:3rem; }
+        .contact__info { display:flex; flex-direction:column; gap:2rem; }
+        .contact__info-item { display:flex; gap:1rem; align-items:flex-start; }
+        .contact__info-item i { font-size:1.8rem; color:var(--primary); margin-top:0.2rem; }
+        .form__group { position:relative; margin-bottom:1.5rem; }
+        .form__group input, .form__group textarea {
+            width:100%; padding:1rem 1rem 1rem 2.8rem; border-radius:14px; border:2px solid var(--border);
+            background:var(--input-bg); font-family:'Inter', sans-serif; color:var(--text); transition: border var(--transition);
+        }
+        .form__group input:focus, .form__group textarea:focus { outline:none; border-color:var(--primary); }
+        .form__icon { position:absolute; left:1rem; top:1.1rem; color:var(--text-light); }
+        .form__error { color:#ef4444; font-size:0.8rem; display:none; }
+        .form__group.error input, .form__group.error textarea { border-color:#ef4444; }
+        .form__success { margin-top:1rem; color:var(--primary); font-weight:600; display:flex; align-items:center; gap:0.5rem; }
+
+        /* FOOTER */
+        .footer { background:var(--bg-alt); border-top:1px solid var(--border); padding:4rem 0 2rem; }
+        .footer__grid { display:grid; grid-template-columns: 2fr 1fr 1fr; gap:3rem; }
+        .footer__logo-img { height:45px; margin-bottom:1rem; }
+        .footer__socials { display:flex; gap:1rem; margin-top:1.5rem; }
+        .footer__socials a { width:40px; height:40px; border-radius:50%; background:var(--card-bg); display:flex; align-items:center; justify-content:center; transition:0.3s; }
+        .footer__socials a:hover { background:var(--primary); color:white; }
+        .footer__links ul, .footer__contact ul { display:flex; flex-direction:column; gap:0.8rem; }
+        .footer__bottom { text-align:center; margin-top:3rem; padding-top:2rem; border-top:1px solid var(--border); color:var(--text-light); }
+
+        /* BACK TO TOP */
+        .back-to-top { position:fixed; bottom:30px; right:30px; width:50px; height:50px; border-radius:50%; background:var(--primary); color:white; border:none; display:flex; align-items:center; justify-content:center; font-size:1.2rem; box-shadow:0 8px 20px rgba(0,0,0,0.2); opacity:0; visibility:hidden; transition:0.3s; z-index:99; cursor:pointer; }
+        .back-to-top.show { opacity:1; visibility:visible; }
+
+        .reveal-fade-up { opacity:0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .reveal-fade-up.visible { opacity:1; transform: translateY(0); }
+        .reveal-fade-in { opacity:0; transition: opacity 0.8s ease; }
+        .reveal-fade-in.visible { opacity:1; }
+
+        @media (max-width: 992px) {
+            .hero__container { grid-template-columns: 1fr; text-align:center; }
+            .hero__image-wrapper { margin-top:2rem; max-width:400px; margin-left:auto; margin-right:auto; }
+            .contact__grid { grid-template-columns: 1fr; }
+            .footer__grid { grid-template-columns: 1fr 1fr; }
+            .image-slider__img { height: 300px; }
+        }
+        @media (max-width: 768px) {
+            .nav__list, .nav__cta { display:none; }
+            .nav__hamburger { display:flex; }
+            .hero__buttons { justify-content:center; }
+            .footer__grid { grid-template-columns: 1fr; }
+            .image-slider__img { height: 250px; }
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" style="position:absolute;top:-100px;left:0;background:var(--primary);color:white;padding:1rem;z-index:1001;transition:top 0.3s;" onfocus="this.style.top='0'" onblur="this.style.top='-100px'">Skip to main content</a>
+
+    <header class="header" id="header">
+        <nav class="nav container">
+            <a href="#home" class="nav__logo">
+                <img src="logo.jpg" alt="NextPath Youth Empowerment Foundation" class="nav__logo-img">
+            </a>
+            <ul class="nav__list" id="navList">
+                <li class="nav__item"><a href="#home" class="nav__link active">Home</a></li>
+                <li class="nav__item"><a href="#about" class="nav__link">About</a></li>
+                <li class="nav__item"><a href="#programs" class="nav__link">Programs</a></li>
+                <li class="nav__item"><a href="#impact" class="nav__link">Impact</a></li>
+                <li class="nav__item"><a href="#donate" class="nav__link">Donate</a></li>
+                <li class="nav__item"><a href="#contact" class="nav__link">Contact</a></li>
+            </ul>
+            <div class="nav__actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                    <i class="fa-solid fa-moon" id="themeIcon"></i>
+                </button>
+                <a href="#contact" class="btn btn--primary nav__cta">Get Involved</a>
+                <button class="nav__hamburger" id="hamburgerBtn" aria-label="Open menu" aria-expanded="false">
+                    <span class="nav__hamburger-bar"></span>
+                    <span class="nav__hamburger-bar"></span>
+                    <span class="nav__hamburger-bar"></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu__backdrop"></div>
+        <div class="mobile-menu__panel">
+            <button class="mobile-menu__close" id="mobileCloseBtn" aria-label="Close menu">&times;</button>
+            <ul class="mobile-menu__list">
+                <li><a href="#home" class="mobile-menu__link" data-mobile-link>Home</a></li>
+                <li><a href="#about" class="mobile-menu__link" data-mobile-link>About</a></li>
+                <li><a href="#programs" class="mobile-menu__link" data-mobile-link>Programs</a></li>
+                <li><a href="#impact" class="mobile-menu__link" data-mobile-link>Impact</a></li>
+                <li><a href="#donate" class="mobile-menu__link" data-mobile-link>Donate</a></li>
+                <li><a href="#contact" class="mobile-menu__link" data-mobile-link>Contact</a></li>
+            </ul>
+            <a href="#contact" class="btn btn--primary mobile-menu__cta" data-mobile-link>Get Involved</a>
+        </div>
+    </div>
+
+    <main id="main-content">
+        <section class="hero" id="home">
+            <div class="hero__bg-shape hero__bg-shape--1"></div>
+            <div class="hero__bg-shape hero__bg-shape--2"></div>
+            <div class="hero__bg-shape hero__bg-shape--3"></div>
+            <div class="hero__bg-shape hero__bg-shape--4"></div>
+            <div class="hero__dots"></div>
+            <div class="hero__container container">
+                <div class="hero__content">
+                    <span class="hero__badge reveal-fade-up">
+                        <i class="fa-solid fa-star"></i> NextPath Youth Empowerment Foundation
+                    </span>
+                    <h1 class="hero__title reveal-fade-up" data-delay="150">
+                        Shaping the <span class="hero__title-gradient">Leaders</span> of Tomorrow, <span class="hero__title-accent">Today</span>
+                    </h1>
+                    <p class="hero__subtitle reveal-fade-up" data-delay="300">
+                        Raising a generation of <strong>empowered, responsible, and innovative</strong> young people who lead with purpose, integrity, and impact.
+                    </p>
+                    <div class="hero__buttons reveal-fade-up" data-delay="450">
+                        <a href="#programs" class="btn btn--primary btn--lg"><i class="fa-solid fa-rocket"></i> Explore Programs</a>
+                        <a href="#contact" class="btn btn--outline btn--lg"><i class="fa-solid fa-handshake"></i> Join Us</a>
+                    </div>
+                </div>
+                <div class="hero__image-wrapper reveal-fade-in" data-delay="300">
+                    <div class="hero__image-ring"></div>
+                    <img src="img1.jpg" alt="Youth empowerment" class="hero__image" loading="lazy">
+                </div>
+            </div>
+        </section>
+
+        <section class="about section" id="about">
+            <div class="container">
+                <div class="section__header reveal-fade-up">
+                    <span class="section__badge">Who We Are</span>
+                    <h2 class="section__title">Empowering the <span class="gradient-text">Next Generation</span></h2>
+                </div>
+                <div class="about__grid">
+                    <div class="about__card reveal-fade-up" data-delay="100">
+                        <div class="about__card-icon"><i class="fa-solid fa-book-open"></i></div>
+                        <h3>Our Story</h3>
+                        <p>NextPath Youth Empowerment Foundation was born out of a deep desire to bridge the gap between potential and opportunity for young people.</p>
+                    </div>
+                    <div class="about__card reveal-fade-up" data-delay="200">
+                        <div class="about__card-icon"><i class="fa-solid fa-eye"></i></div>
+                        <h3>Our Vision</h3>
+                        <p>To raise a generation of empowered, responsible, and innovative young people who lead with purpose, integrity, and impact.</p>
+                    </div>
+                    <div class="about__card reveal-fade-up" data-delay="300">
+                        <div class="about__card-icon"><i class="fa-solid fa-bullseye"></i></div>
+                        <h3>Our Mission</h3>
+                        <p>To equip teenagers and youths with mentorship, life skills, STEM education, and personal development opportunities.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="programs section section--alt" id="programs">
+            <div class="container">
+                <div class="section__header reveal-fade-up">
+                    <span class="section__badge">What We Do</span>
+                    <h2 class="section__title">Our <span class="gradient-text">Programs</span></h2>
+                </div>
+
+                <div class="slider-title reveal-fade-up">🔥 Life & Career Skills • Peace & Community Engagement</div>
+                <div class="image-slider reveal-fade-up" id="slider1">
+                    <div class="image-slider__track" id="track1">
+                        <img src="img1.jpg" alt="Program 1" class="image-slider__img" loading="lazy">
+                        <img src="img2.jpg" alt="Program 2" class="image-slider__img" loading="lazy">
+                        <img src="img3.jpg" alt="Program 3" class="image-slider__img" loading="lazy">
+                        <img src="img4.jpg" alt="Program 4" class="image-slider__img" loading="lazy">
+                        <img src="img5.jpg" alt="Program 5" class="image-slider__img" loading="lazy">
+                        <img src="img6.jpg" alt="Program 6" class="image-slider__img" loading="lazy">
+                    </div>
+                    <div class="image-slider__dots" id="dots1"></div>
+                </div>
+
+                <div class="slider-title reveal-fade-up" style="margin-top:2.5rem;">📸 Teachers Hangout • Skills, Values & Opportunities</div>
+                <div class="image-slider reveal-fade-up" id="slider2">
+                    <div class="image-slider__track" id="track2">
+                        <img src="img6.jpg" alt="Activity 6" class="image-slider__img" loading="lazy">
+                        <img src="img7.jpg" alt="Activity 7" class="image-slider__img" loading="lazy">
+                        <img src="img8.jpg" alt="Activity 8" class="image-slider__img" loading="lazy">
+                        <img src="img9.jpg" alt="Activity 9" class="image-slider__img" loading="lazy">
+                        <img src="img10.jpg" alt="Activity 10" class="image-slider__img" loading="lazy">
+                        <img src="img11.jpg" alt="Activity 11" class="image-slider__img" loading="lazy">
+                        <img src="img12.jpg" alt="Activity 12" class="image-slider__img" loading="lazy">
+                    </div>
+                    <div class="image-slider__dots" id="dots2"></div>
+                </div>
+
+                <div class="programs__grid">
+                    <div class="program-card reveal-fade-up">
+                        <div class="program-card__icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                        <h3>Mentorship</h3>
+                        <p>One-on-one guidance from dedicated mentors who provide support, career insights, and personal growth strategies.</p>
+                        <span class="program-card__link">Learn more <i class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+                    <div class="program-card reveal-fade-up" data-delay="100">
+                        <div class="program-card__icon"><i class="fa-solid fa-robot"></i></div>
+                        <h3>STEM Education</h3>
+                        <p>Hands-on training in coding, robotics, and digital literacy to prepare youths for the future of work.</p>
+                        <span class="program-card__link">Learn more <i class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+                    <div class="program-card reveal-fade-up" data-delay="200">
+                        <div class="program-card__icon"><i class="fa-solid fa-heart"></i></div>
+                        <h3>Life Skills</h3>
+                        <p>Workshops on communication, financial literacy, emotional intelligence, and decision-making.</p>
+                        <span class="program-card__link">Learn more <i class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+                    <div class="program-card reveal-fade-up" data-delay="300">
+                        <div class="program-card__icon"><i class="fa-solid fa-person-rays"></i></div>
+                        <h3>Personal Development</h3>
+                        <p>Confidence-building activities, public speaking, and goal-setting sessions to unlock every youth's potential.</p>
+                        <span class="program-card__link">Learn more <i class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="impact section" id="impact">
+            <div class="container">
+                <div class="section__header reveal-fade-up">
+                    <span class="section__badge">Our Reach</span>
+                    <h2 class="section__title">Make a Real <span class="gradient-text">Impact</span></h2>
+                </div>
+                <div class="impact__grid">
+                    <div class="impact__item reveal-fade-up"><span class="impact__number" data-target="1250">0</span><span class="impact__label">Youths Reached</span></div>
+                    <div class="impact__item reveal-fade-up" data-delay="100"><span class="impact__number" data-target="48">0</span><span class="impact__label">Workshops Held</span></div>
+                    <div class="impact__item reveal-fade-up" data-delay="200"><span class="impact__number" data-target="35">0</span><span class="impact__label">Mentors Onboard</span></div>
+                    <div class="impact__item reveal-fade-up" data-delay="300"><span class="impact__number" data-target="12">0</span><span class="impact__label">Communities</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DONATE SECTION -->
+        <section class="section section--alt" id="donate">
+            <div class="container">
+                <div class="section__header reveal-fade-up">
+                    <span class="section__badge">Support Us</span>
+                    <h2 class="section__title">Make a <span class="gradient-text">Donation</span></h2>
+                    <p style="max-width:600px; margin:1rem auto 0; color:var(--text-light);">Your generous contribution empowers us to reach more young people with life-changing opportunities.</p>
+                </div>
+
+                <div class="donate__card reveal-fade-up">
+                    <div class="donate__icon">
+                        <i class="fa-solid fa-hand-holding-heart"></i>
+                    </div>
+                    <h3 style="font-size:1.8rem; margin-bottom:1.5rem;">Bank Transfer Details</h3>
+
+                    <div class="donate__bank-details">
+                        <p>
+                            <strong>Account Name</strong>
+                            <span>NextPath Youth Empowerment Foundation</span>
+                        </p>
+                        <p>
+                            <strong>Bank</strong>
+                            <span>Zenith Bank</span>
+                        </p>
+                        <p style="display: flex; align-items: center;">
+                            <strong>Account Number</strong>
+                            <span style="display: flex; align-items: center; gap: 1rem;">
+                                <span id="accountNumber">1311829878</span>
+                                <button class="copy-btn" id="copyBtn" onclick="copyAccountNumber()">
+                                    <i class="fa-regular fa-copy"></i> Copy
+                                </button>
+                            </span>
+                        </p>
+                        <p id="copiedMsg" class="copied-msg" style="display: none; text-align: right;">
+                            <i class="fa-solid fa-check"></i> Copied!
+                        </p>
+                    </div>
+
+                    <p style="color:var(--text-light); margin-top:1rem;">
+                        <i class="fa-solid fa-circle-info"></i> After making a transfer, kindly send us an email with your details to receive an acknowledgment.
+                    </p>
+                    <a href="mailto:NextPathyouth@gmail.com?subject=Donation Acknowledgement" class="btn btn--primary" style="margin-top:1.5rem;">
+                        <i class="fa-solid fa-envelope"></i> Notify Us
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta section">
+            <div class="container cta__content reveal-fade-up">
+                <h2>Ready to Empower the Next Generation?</h2>
+                <p>Volunteer, partner, or donate to help us reach even more young people with life-changing opportunities.</p>
+                <a href="#contact" class="btn btn--primary btn--lg"><i class="fa-solid fa-hands-holding-circle"></i> Get Involved Today</a>
+            </div>
+        </section>
+
+        <section class="contact section" id="contact">
+            <div class="container">
+                <div class="section__header reveal-fade-up">
+                    <span class="section__badge">Contact</span>
+                    <h2 class="section__title">Get In <span class="gradient-text">Touch</span></h2>
+                </div>
+                <div class="contact__grid">
+                    <div class="contact__info reveal-fade-up" data-delay="100">
+                        <div class="contact__info-item"><i class="fa-solid fa-envelope"></i><div><h4>Email</h4><a href="mailto:NextPathyouth@gmail.com">NextPathyouth@gmail.com</a></div></div>
+                        <div class="contact__info-item"><i class="fa-solid fa-phone"></i><div><h4>Phone</h4><a href="tel:+2348108446301">08108446301</a></div></div>
+                        <div class="contact__info-item"><i class="fa-solid fa-location-dot"></i><div><h4>Location</h4><span>Kaduna, Nigeria (Outreach across communities)</span></div></div>
+                    </div>
+                    <form class="contact__form reveal-fade-up" id="contactForm" data-delay="200" novalidate>
+                        <div class="form__group">
+                            <input type="text" id="name" placeholder="Your Full Name" required>
+                            <i class="fa-solid fa-user form__icon"></i>
+                            <span class="form__error" id="nameError" role="alert"></span>
+                        </div>
+                        <div class="form__group">
+                            <input type="email" id="email" placeholder="Email Address" required>
+                            <i class="fa-solid fa-envelope form__icon"></i>
+                            <span class="form__error" id="emailError" role="alert"></span>
+                        </div>
+                        <div class="form__group">
+                            <textarea id="message" rows="5" placeholder="Write your message..." required></textarea>
+                            <i class="fa-solid fa-message form__icon"></i>
+                            <span class="form__error" id="messageError" role="alert"></span>
+                        </div>
+                        <button type="submit" class="btn btn--primary btn--full"><i class="fa-solid fa-paper-plane"></i> Send Message</button>
+                        <div class="form__success" id="formSuccess" style="display:none;">
+                            <i class="fa-solid fa-circle-check"></i> Opening email client… Message will be sent to NextPathyouth@gmail.com
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer__grid">
+            <div class="footer__brand">
+                <img src="logo.jpg" alt="NextPath Youth" class="footer__logo-img">
+                <p>Raising a generation of empowered, responsible, and innovative young leaders.</p>
+                <div class="footer__socials">
+                    <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer__links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#programs">Programs</a></li>
+                    <li><a href="#impact">Impact</a></li>
+                    <li><a href="#donate">Donate</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer__contact">
+                <h4>Contact Info</h4>
+                <ul>
+                    <li><i class="fa-solid fa-envelope"></i> <a href="mailto:NextPathyouth@gmail.com">NextPathyouth@gmail.com</a></li>
+                    <li><i class="fa-solid fa-phone"></i> <a href="tel:+2348108446301">08108446301</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer__bottom">
+            <p>&copy; 2026 NextPath Youth Empowerment Foundation. All rights reserved. Built with <i class="fa-solid fa-heart" style="color: var(--accent);"></i> for impact.</p>
+        </div>
+    </footer>
+
+    <button class="back-to-top" id="backToTop" aria-label="Back to top"><i class="fa-solid fa-arrow-up"></i></button>
+
+    <script>
+        // Copy account number
+        function copyAccountNumber() {
+            const accountNumber = document.getElementById('accountNumber').textContent;
+            navigator.clipboard.writeText(accountNumber).then(() => {
+                const msg = document.getElementById('copiedMsg');
+                msg.style.display = 'block';
+                setTimeout(() => { msg.style.display = 'none'; }, 2000);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const header = document.getElementById('header');
+            const themeToggle = document.getElementById('themeToggle');
+            const themeIcon = document.getElementById('themeIcon');
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileCloseBtn = document.getElementById('mobileCloseBtn');
+            const mobileLinks = document.querySelectorAll('[data-mobile-link]');
+            const navLinks = document.querySelectorAll('.nav__link');
+            const backToTopBtn = document.getElementById('backToTop');
+            const sections = document.querySelectorAll('section[id]');
+            const contactForm = document.getElementById('contactForm');
+            const formSuccess = document.getElementById('formSuccess');
+
+            // Dark mode
+            const currentTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            themeIcon.className = currentTheme === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+            themeToggle.addEventListener('click', () => {
+                const theme = document.documentElement.getAttribute('data-theme');
+                const newTheme = theme === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                themeIcon.className = newTheme === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+            });
+
+            // Mobile menu
+            function openMenu() { mobileMenu.classList.add('active'); hamburgerBtn.setAttribute('aria-expanded', true); }
+            function closeMenu() { mobileMenu.classList.remove('active'); hamburgerBtn.setAttribute('aria-expanded', false); }
+            hamburgerBtn.addEventListener('click', openMenu);
+            mobileCloseBtn.addEventListener('click', closeMenu);
+            mobileLinks.forEach(link => link.addEventListener('click', closeMenu));
+            mobileMenu.querySelector('.mobile-menu__backdrop').addEventListener('click', closeMenu);
+
+            // Nav highlight & sticky
+            window.addEventListener('scroll', () => {
+                header.style.boxShadow = window.scrollY > 50 ? '0 4px 20px rgba(0,0,0,0.05)' : 'none';
+                let current = '';
+                sections.forEach(section => {
+                    if (pageYOffset >= section.offsetTop - 100) current = section.getAttribute('id');
+                });
+                navLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href') === `#${current}`));
+                backToTopBtn.classList.toggle('show', window.scrollY > 700);
+            });
+
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
+            }));
+
+            // Scroll reveal
+            const revealElements = document.querySelectorAll('.reveal-fade-up, .reveal-fade-in');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const delay = entry.target.dataset.delay ? parseInt(entry.target.dataset.delay) : 0;
+                        setTimeout(() => entry.target.classList.add('visible'), delay);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.15, rootMargin: "0px 0px -50px 0px" });
+            revealElements.forEach(el => observer.observe(el));
+            window.addEventListener('load', () => {
+                document.querySelectorAll('.hero .reveal-fade-up, .hero .reveal-fade-in').forEach(el => el.classList.add('visible'));
+            });
+
+            // Counters
+            const counters = document.querySelectorAll('.impact__number');
+            const counterObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const counter = entry.target;
+                        const target = +counter.dataset.target;
+                        const duration = 2000;
+                        const step = target / (duration / 16);
+                        let current = 0;
+                        const updateCounter = () => {
+                            current += step;
+                            counter.textContent = current < target ? Math.floor(current) : target;
+                            if (current < target) requestAnimationFrame(updateCounter);
+                        };
+                        updateCounter();
+                        counterObserver.unobserve(counter);
+                    }
+                });
+            }, { threshold: 0.6 });
+            counters.forEach(counter => counterObserver.observe(counter));
+
+            // Sliders (5 seconds)
+            function createSlider(trackId, dotsId, count, interval = 5000) {
+                const track = document.getElementById(trackId);
+                const dots = document.getElementById(dotsId);
+                let index = 0;
+                for (let i = 0; i < count; i++) {
+                    const dot = document.createElement('span');
+                    dot.className = 'image-slider__dot';
+                    if (i === 0) dot.classList.add('active');
+                    dot.onclick = () => { index = i; update(); resetTimer(); };
+                    dots.appendChild(dot);
+                }
+                function update() { track.style.transform = `translateX(-${index * 100}%)`; [...dots.children].forEach((d,i) => d.classList.toggle('active', i===index)); }
+                function next() { index = (index + 1) % count; update(); }
+                let timer = setInterval(next, interval);
+                function resetTimer() { clearInterval(timer); timer = setInterval(next, interval); }
+                return { update, resetTimer };
+            }
+            createSlider('track1', 'dots1', 6, 5000);
+            createSlider('track2', 'dots2', 7, 5000);
+
+            // Contact form
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                document.querySelectorAll('.form__group').forEach(g => { g.classList.remove('error'); g.querySelector('.form__error').style.display = 'none'; });
+                formSuccess.style.display = 'none';
+                const name = document.getElementById('name').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const message = document.getElementById('message').value.trim();
+                let isValid = true;
+                const setError = (fieldId, msg) => {
+                    const errEl = document.getElementById(fieldId+'Error');
+                    errEl.textContent = msg;
+                    errEl.style.display = 'block';
+                    document.getElementById(fieldId).parentElement.classList.add('error');
+                    isValid = false;
+                };
+                if (!name) setError('name', 'Name is required');
+                if (!email) setError('email', 'Email is required');
+                else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) setError('email', 'Please enter a valid email');
+                if (!message) setError('message', 'Message cannot be empty');
+                if (!isValid) return;
+                const subject = `Contact from NextPath Youth Website - ${name}`;
+                const body = `Name: ${name}%0D%0AEmail: ${email}%0D%0A%0D%0AMessage:%0D%0A${message}`;
+                window.location.href = `mailto:NextPathyouth@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+                formSuccess.style.display = 'flex';
+                contactForm.reset();
+            });
+
+            backToTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        });
+    </script>
+</body>
+</html>
