@@ -192,21 +192,34 @@
             text-align: left;
             border: 1px solid var(--border);
         }
-        .donate__bank-details p {
-            display: flex; justify-content: space-between;
-            padding: 0.8rem 0; border-bottom: 1px solid var(--border);
+        .donate__detail {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--border);
         }
-        .donate__bank-details p:last-child { border-bottom: none; }
+        .donate__detail:last-child {
+            border-bottom: none;
+        }
+        .donate__label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+        .donate__value {
+            display: inline-block;
+            word-break: break-word;
+        }
         .copy-btn {
             background: var(--primary-light);
             color: var(--primary-dark);
             border: none;
-            padding: 0.5rem 1rem;
+            padding: 0.4rem 1rem;
             border-radius: 20px;
             cursor: pointer;
             font-weight: 600;
             transition: 0.2s;
             font-size: 0.9rem;
+            margin-left: 0.5rem;
+            vertical-align: middle;
         }
         .copy-btn:hover { background: var(--primary); color: white; }
         .copied-msg { color: var(--primary); font-size: 0.9rem; margin-top: 0.5rem; }
@@ -448,7 +461,7 @@
             </div>
         </section>
 
-        <!-- DONATE SECTION -->
+        <!-- DONATE SECTION (improved layout) -->
         <section class="section section--alt" id="donate">
             <div class="container">
                 <div class="section__header reveal-fade-up">
@@ -464,32 +477,26 @@
                     <h3 style="font-size:1.8rem; margin-bottom:1.5rem;">Bank Transfer Details</h3>
 
                     <div class="donate__bank-details">
-                        <p>
-                            <strong>Account Name</strong>
-                            <span>NextPath Youth Empowerment Foundation</span>
-                        </p>
-                        <p>
-                            <strong>Bank</strong>
-                            <span>Zenith Bank</span>
-                        </p>
-                        <p style="display: flex; align-items: center;">
-                            <strong>Account Number</strong>
-                            <span style="display: flex; align-items: center; gap: 1rem;">
-                                <span id="accountNumber">1311829878</span>
-                                <button class="copy-btn" id="copyBtn" onclick="copyAccountNumber()">
-                                    <i class="fa-regular fa-copy"></i> Copy
-                                </button>
-                            </span>
-                        </p>
-                        <p id="copiedMsg" class="copied-msg" style="display: none; text-align: right;">
-                            <i class="fa-solid fa-check"></i> Copied!
-                        </p>
+                        <div class="donate__detail">
+                            <span class="donate__label">Account Name:</span>
+                            <span class="donate__value">NextPath Youth Empowerment Foundation</span>
+                        </div>
+                        <div class="donate__detail">
+                            <span class="donate__label">Account Number:</span>
+                            <span class="donate__value" id="accountNumber">1311829878</span>
+                            <button class="copy-btn" id="copyBtn" onclick="copyAccountNumber()"><i class="fa-regular fa-copy"></i> Copy</button>
+                        </div>
+                        <div class="donate__detail">
+                            <span class="donate__label">Bank:</span>
+                            <span class="donate__value">Zenith Bank</span>
+                        </div>
                     </div>
+                    <p id="copiedMsg" class="copied-msg" style="display: none;"><i class="fa-solid fa-check"></i> Account number copied!</p>
 
                     <p style="color:var(--text-light); margin-top:1rem;">
                         <i class="fa-solid fa-circle-info"></i> After making a transfer, kindly send us an email with your details to receive an acknowledgment.
                     </p>
-                    <a href="mailto:NextPathyouth@gmail.com?subject=Donation Acknowledgement" class="btn btn--primary" style="margin-top:1.5rem;">
+                    <a href="mailto:NextPathyouth@gmail.com?subject=Donation%20Acknowledgment" class="btn btn--primary" style="margin-top:1.2rem;">
                         <i class="fa-solid fa-envelope"></i> Notify Us
                     </a>
                 </div>
@@ -581,7 +588,6 @@
     <button class="back-to-top" id="backToTop" aria-label="Back to top"><i class="fa-solid fa-arrow-up"></i></button>
 
     <script>
-        // Copy account number
         function copyAccountNumber() {
             const accountNumber = document.getElementById('accountNumber').textContent;
             navigator.clipboard.writeText(accountNumber).then(() => {
